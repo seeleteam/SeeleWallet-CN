@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Seele Wallet</title>
+    <link href="./src/css/jquery-ui-slider-pips.min.css" rel="stylesheet" />
+    <link href="./src/css/jqueryui.min.css" rel="stylesheet" />
+    <link href="./src/css/tab.css" rel="stylesheet" />
+    <link href="./src/css/pulic.css" rel="stylesheet" />
+    <link href="./src/css/index.css" rel="stylesheet" />
+    <link href="./src/css/account-info.css" rel="stylesheet" />
+    <script type="text/javascript" src="qrcode.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="head-main">
+                <div class="logo"><img src="./src/img/logo-head.png"></div>
+                <ul class="quick-link">
+                    <li id="netWork">私网</li>
+                    <li id="isListening">断连</li>
+                    <li id="blockheight">0</li>
+                    <li><select id="shard">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select></li>
+                </ul>
+                <div class="get-balance"><span>余额</span><span id="span_balance">0.00</span><span>元一</span></div>
+            </div>
+        </div>
+        <div class="main">
+            <div id="tab">
+                <ul>
+                    <li><a href="#tabs-1" title="WALLETS">钱包</a></li>
+                    <li><a href="#tabs-2" title="SEND">交易</a></li>
+                    <li><a href="#tabs-3" title="CONTRACT">合约</a></li>
+                </ul>
+                <div id="tabs_container">
+                    <div id="tabs-1">
+                        <h1>账户总览</h1>
+                        <div id="accountlist">
+                            <div class="accountFor">
+                                <span class="accountImg"><img src="./src/img/Headportrait.png"></span>
+                                <ul>
+                                    <li>Account</li>
+                                    <li><span>info.Balance</span> seele</li>
+                                    <li>seeleClient.accountArray[item]seeleClient.accountArray[item]seeleClient.accountArray[item]</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <button class="add-account">
+                            <span><img src="./src/img/add.png"></span>
+                            <span>创建</span>
+                        </button>
+                        <p class="info">账户指的是用于签名交易与合约所用的钥匙文件
+                            本身不能展示账户交易</p>
+
+                        <!--<h3 class="latest-title">Latest Transactions</h3>-->
+                        <!--<div class="overflow">-->
+                            <!--<div class="account-contact">-->
+                                <!--<p class="contact-left">-->
+                                    <!--<span>Nov.</span>-->
+                                    <!--<span>13</span>-->
+                                <!--</p>-->
+                                <!--<ul class="contact-right">-->
+                                    <!--<li>Created Contact</li>-->
+                                    <!--<li><span>0xd3ee9ab572ed74f0b837ad9ea86f85e30e1dd6d1</span><span><a href="">https://seelescan.net/#/transaction/detail?txhash=0x4729740df31fa87ab73dcb537e2b6dcd6ac01735f936afd4ff08011747da5b00</a></span></li>-->
+                                <!--</ul>-->
+                            <!--</div>-->
+                            <!--<div class="account-contact">-->
+                                <!--<p class="contact-left">-->
+                                    <!--<span>Nov.</span>-->
+                                    <!--<span>13</span>-->
+                                <!--</p>-->
+                                <!--<ul class="contact-right">-->
+                                    <!--<li>Transfer Between Accounts</li>-->
+                                    <!--<li><span>0xd3ee9ab572ed74f0b837ad9ea86f85e30e1dd6d1</span><span><a href="">https://seelescan.net/#/transaction/detail?txhash=0x4729740df31fa87ab73dcb537e2b6dcd6ac01735f936afd4ff08011747da5b00</a></span></li>-->
+                                <!--</ul>-->
+                            <!--</div>-->
+                        <!--</div>-->
+
+
+                    </div>
+                    <div id="tabs-2">
+                        <h1 id="send-title" class="send-title">发送交易</h1>
+                        <form id="txform">
+                            <ul class="send-list">
+                                <li id="shardfrom">发送者<input type="text" placeholder="" id="txpublicKey" name="txpublickey" readonly="readonly"></li>
+                                <li id="shardto">接收者<input type="text" placeholder="0x000..." id="to" name="to" ></li>
+                                <li>密码<input type="password" placeholder="press key file password" id="accountpassWord" name="accountpassword"></li>
+                                <li>金额<input type="text" placeholder="0.0" id="amount" name="amount" class="numbersOnly" value="0.0"></li>
+                                <li><img src="./src/img/sendIcon.png"><span id="txamount1">0.00</span>元一</li>
+                                <li>发送 <span id="txamount2">0</span> 元一 </li>
+                            </ul>
+                            <h2 class="progress-title">配送奖励</h2>
+                            <div class="progress" id="gasPrice">
+                                <ul>
+                                    <li>普通</li>
+                                    <li>加快</li>
+                                </ul>                                
+                            </div>
+                            <p class="progress-info">您的 <span>同片交易</span> 大约 <span>在三十秒以内即可完成</span>, 而 <span>跨片交易</span> 可能会需要更久（20分钟）</p>
+                                <div class="gas-limit"> 预估油耗:<span id="estimatedgas">21000</span> </div>
+                                <dl class="total">
+                                <dt>总额</dt>
+                                <dd><span id="totalamount">0.0</span>元一</dd>
+                            </dl>
+                            <input id="sendtx" class="send" value="发送" type="button">
+                        </form>
+                    </div>
+                    <div id="tabs-3">
+                        <h1 class="send-title">部署合约</h1>
+                        <form id="contractForm">
+                            <ul class="send-list">
+                                <li>发件人<input type="text" placeholder="" id="contractPublicKey" name="contractPublicKey" readonly="readonly"></li>
+                                <li>密码<input type="password" placeholder="press key file password" id="contractAccountpassWord" name="contractAccountpassWord"></li>
+                                <li>金额<input type="text" placeholder="0.0" id="contractAmount" name="contractAmount" value="0.0"></li>
+                                <li><img src="./src/img/sendIcon.png"><span id="ctxamount1">0.0</span>元一</li>
+                                <!-- <li><input class="magic-checkbox" type="checkbox" name="send" id="sendEvery">
+                                    <label for="sendEvery">Send everything</label></li> -->
+                                <li>发送 <span id="ctxamount2">0.0 </span>元一</li>
+                            </ul>
+                            <div class="solc">
+                                <div class="tab-code">
+                                    <ul>
+                                        <li class="code-default cur">SOLIDITY 合约源代码</li>
+                                        <li class="code-after">合约可执行码</li>
+                                    </ul>
+                                    <div id="getPayload" name="getPayload" style="display:none"></div>
+                                    <div id="contractSourceCode" style="display:none"></div>
+                                    <div class="code_container">
+                                        <textarea id="contractInput">pragma solidity ^0.5.0;
+contract validUintContractTest {
+    function test() public pure {
+    }
+}</textarea>
+                                    </div>
+                                </div>
+                                <input type="button" class="compile" id="compileContract" value="编译" />
+                                <div id="compileSuccess" class="success-result">
+                                    <span class="success"></span>
+                                </div>
+                                <!--<div id="compileFail" class="fail-result">
+                                    <span class="fail">Could not compile cource code.</span>
+                                    <input type="button" class="compile" id="compileAgain" value="Compile Again"/>
+                                    <div class="code_container">
+                                        <textarea></textarea>
+                                    </div>
+                                </div>-->
+                            </div>
+                            <h2 class="progress-title">配送奖励</h2>
+                            <div class="progress" id="contractGasPrice">
+                                <ul>
+                                    <li>普通</li>
+                                    <li>加快</li>
+                                </ul>
+                            </div>
+                            <p class="progress-info">这是处理该类交易可以使用的最高额度。该类交易从发送到距查询大约需要 <span>30秒</span></p>
+                                <div class="gas-limit"> Estimated gas:<span id="ctx-estimatedgas">21000</span> </div>
+                                <dl class="total">
+                                <dt>总额</dt>
+                                <dd><span id="ctx-totalamount">0.0</span> 元一</dd>
+                            </dl>
+                            <div id="QueryHash" style="display:none"></div>
+                            <input id="deployContract" class="send" value="部署" type="button">
+                            <input id="QueryContract" class="send Query" value="搜寻" type="button">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="dask"></div>
+        <div class="minedask"></div>
+        <div class="create-account">
+            <span class="name">请保存公私钥和密码</span>
+            <input type="password" class="login-field login-field-password" id="passWord" placeholder="设置密码为">
+            <div class="hideShowPassword-toggle">显示</div>
+            <select id="shardnum">
+                <option value=''>任意</option>
+                <option value='1'>1</option>
+                <option value='2'>2</option>
+                <option value='3'>3</option>
+                <option value='4'>4</option>
+            </select>
+            <span class="name">片</span>
+            <input type="button" value="取消" id="cancel">
+            <input type="button" value="确认" id="createKey">
+            <span id="address"></span>
+            <span id="filepath"></span>
+        </div>
+        <div class="search-hash" >
+            <h3>Query Contract</h3>
+            <div class="search">
+                <input type="text" placeholder="Hash:" id="ctxHash">
+                <button><span><img src="./src/img/search.png" id="searchImg"></span></button>
+            </div>
+            <ul>
+                <li id="contractHash">contract: ”0x”</li>
+                <li id="contractDeployFailedOrNo">failed: false</li>
+                <li id="contractPoststate">poststate: “0x”</li>
+                <li id="contractResult">result: “0x”</li>
+                <li id="contractTota1Fee">tota1Fee: 210000</li>
+                <li id="contractTxhash">txhash: “0x”</li>
+                <li id="contractUsedGas">usedGas: 210000</li>
+            </ul>
+            <button class="ok-search">OK</button>
+        </div>
+        <!--<script src="bundle.js"></script>-->
+        <script>
+            // You can also require other files to run in this process
+            // require('./renderer.js')
+            require('./src/api/seeleClient.js')
+            require('./src/js/getBalance.js')
+            require('./src/js/createAccount.js')
+            require('./src/js/sendtx.js')
+            require('./src/js/walletConnect.js')
+            require('./src/js/contract.js')
+        </script>
+</body>
+<script src="./src/js/jQuery.js"></script>
+<script src="./src/js/jquery-plus-ui.min.js"></script>
+<script src="./src/js/jquery-ui-slider-pips.js"></script>
+<script src="./src/js/jquery.validate.js"></script>
+
+<script src="./src/js/hidePassword.js"></script>
+<script src="./src/js/clipboard.min.js"></script>
+<script src="./src/js/tab.js"></script>
+<script src="./src/js/progress.js"></script>
+<script src="./src/js/index.js"></script>
+<script src="./src/js/layer.js"></script>
+</html>
